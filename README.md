@@ -5,7 +5,7 @@ Show the vaccine per capita count in Malaysia map. Data visualization for the va
 
 ## Screenshots
 
-![Demo 1](/docs/demo1.jpg?raw=true "Demo 1")
+![Demo 1](/docs/demo1.png?raw=true "Demo 1")
 
 
 ## TODO
