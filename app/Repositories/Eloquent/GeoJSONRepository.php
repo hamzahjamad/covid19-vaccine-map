@@ -83,7 +83,7 @@ class GeoJSONRepository implements IGeoJSONRepository
             $item["properties"]["Description1"] =  "<b>".number_format($doses_administered_1st, 0, ".", ",")."</b> first doses have been administered, <b>".$percapita_count_1st."</b> per 100 people.";
 
             $item["properties"]["Weight2"] = round($doses_administered_2nd/$population, 2) * 10;
-            $item["properties"]["Description2"] =  "<b>".number_format($doses_administered_2nd, 0, ".", ",")."</b> second doses have been administered, <b>".$percapita_count_1st."</b> per 100 people.";
+            $item["properties"]["Description2"] =  "<b>".number_format($doses_administered_2nd, 0, ".", ",")."</b> second doses have been administered, <b>".$percapita_count_2nd."</b> per 100 people.";
             
             return $item;
         }, $geojson["features"]);

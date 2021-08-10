@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Repositories\Contracts\IGeoJSONRepository;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('/data/geojson', function (\App\Repositories\Contracts\IGeoJSONRepository $geojson_repository) {
+Route::get('/data/geojson', function (IGeoJSONRepository $geojson_repository) {
     return $geojson_repository->getGeoJSON();
 });

@@ -34,6 +34,8 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -55,22 +57,108 @@
             fetch('/data/geojson')
                 .then(response => response.json())
                 .then(data =>{
-                    L.geoJSON(data, {
+                    var geojsonLayer = L.geoJSON(data, {
                         style: function(feature) {
+
+                            const urlParams = new URLSearchParams(window.location.search);
+                            const showCount = urlParams.get('show_count');
+
+                            var weight = "";
+                            
+                            if (showCount == null || showCount=="dose1_cumul") {
+                                weight = feature.properties.Weight1;
+                            }
+
+                            if (showCount=="dose2_cumul") {
+                                weight = feature.properties.Weight2;
+                            }
+
+                            var weight = feature.properties.Weight1;
                             return {
-                                "fillOpacity": feature.properties.Weight1 / 10
+                                "fillOpacity": weight / 10
                             }
                         },
                         onEachFeature: function (feature, layer) {
-                            var template = `
-                                <div class="card-body">
-                                    <h5 class="card-title">${feature.properties.Name}</h5>
-                                    <p class="card-text">${feature.properties.Description1}</p>
-                                </div>
-                            `;
-                            layer.bindPopup(template);
+
+                            layer.on('click', function(){
+                    
+                                const urlParams = new URLSearchParams(window.location.search);
+                                const showCount = urlParams.get('show_count');
+
+                                var description = "";
+                                
+                                if (showCount == null || showCount=="dose1_cumul") {
+                                    description = feature.properties.Description1;
+                                    weight = feature.properties.Weight1;
+                                }
+
+                                if (showCount=="dose2_cumul") {
+                                    description = feature.properties.Description2;
+                                    weight = feature.properties.Weight2;
+                                }
+                                
+
+                                var template = `
+                                    <div class="card-body">
+                                        <h5 class="card-title">${feature.properties.Name}</h5>
+                                        <p class="card-text">${description}</p>
+                                    </div>
+                                `;
+                                layer.bindPopup(template).openPopup();
+
+                            });
+                           
                         }
-                    }).addTo(mymap);
+                    });
+                    
+                    geojsonLayer.addTo(mymap);
+
+
+                    var customControl =  L.Control.extend({
+                                                    options: {
+                                                    position: 'bottomleft'
+                                                    },
+                                                    onAdd: function (map) {
+                                                        var container = L.DomUtil.create('div');
+                                                        container.className = "card"
+                                                        var buttonGroup = `
+                                                        <div class="card-header">
+                                                            Legend
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <h6 class="card-title">Display Doses Administered</h6>
+                                                            <div class="form-check card-text">
+                                                                <input class="form-check-input" type="radio" name="show_count" value="dose1_cumul" id="first_doses" checked>
+                                                                <label class="form-check-label" for="first_doses">
+                                                                    First Doses
+                                                                </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="show_count" value="dose2_cumul" id="second_doses">
+                                                                <label class="form-check-label" for="second_doses">
+                                                                    Second Doses
+                                                                </label>
+                                                            </div>
+                                                
+                                                        </div>
+                                                        `;
+                                                
+                                                        container.innerHTML = buttonGroup;
+                                                        var firstDose = container.children[1].children[1].children[0];
+                                                        var secondDose = container.children[1].children[2].children[0];
+      
+                                                        var handleShowCount = function($event) {
+                                                            window.history.replaceState(null, null, '/?show_count=' + $event.target.value);
+                                                        };
+
+                                                        firstDose.onclick = handleShowCount
+                                                        secondDose.onclick = handleShowCount
+
+                                                        return container;
+                                                    }
+                                                });
+                    mymap.addControl(new customControl());
+
                 });
 
             
