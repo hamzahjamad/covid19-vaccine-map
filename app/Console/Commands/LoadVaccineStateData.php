@@ -50,12 +50,19 @@ class LoadVaccineStateData extends Command
             $vaccine_state = VaccineState::updateOrCreate(['date' => $row[0], 'state' => $row[1]], [ 
                 "date" => $row[0],
                 "state" => $row[1],
-                "dose1_daily" => $row[2],
-                "dose2_daily" => $row[3],
-                "total_daily" => $row[4],
-                "dose1_cumul" => $row[5],
-                "dose2_cumul" => $row[6],
-                "total_cumul" => $row[7]
+                "daily_partial" => $row[2],
+                "daily_full" => $row[3],
+                "daily" => $row[4],
+                "cumul_partial" => $row[5],
+                "cumul_full" => $row[6],
+                "cumul" => $row[7],
+                "pfizer1" => $row[8],
+                "pfizer2" => $row[9],
+                "sinovac1" => $row[10],
+                "sinovac2" => $row[11],
+                "astra1" => $row[12],
+                "astra2" => $row[13],
+                "pending" => $row[14],
             ]);
         }
 

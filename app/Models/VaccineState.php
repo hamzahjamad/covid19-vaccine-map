@@ -12,11 +12,18 @@ class VaccineState extends Model
     protected $fillable = [
         "date",
         "state",
-        "dose1_daily",
-        "dose2_daily",
-        "total_daily",
-        "dose1_cumul",
-        "dose2_cumul",
-        "total_cumul"
+        "daily_partial",
+        "daily_full",
+        "daily",
+        "cumul_partial",
+        "cumul_full",
+        "cumul",
+        "pfizer1",
+        "pfizer2",
+        "sinovac1",
+        "sinovac2",
+        "astra1",
+        "astra2",
+        "pending",
     ];
 }
