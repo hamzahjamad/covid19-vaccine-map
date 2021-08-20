@@ -24,6 +24,9 @@
             height: 100%;
             width: 100%;
         }
+        .legend-card {
+            margin-bottom: 40px !important;
+        }
     </style>
 
   </head>
@@ -120,7 +123,7 @@
                                                     },
                                                     onAdd: function (map) {
                                                         var container = L.DomUtil.create('div');
-                                                        container.className = "card"
+                                                        container.className = "card legend-card"
                                                         var buttonGroup = `
                                                         <div class="card-header">
                                                             Legend
