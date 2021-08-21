@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('vaccine-state:load-data')->dailyAt('13:00');
+        $schedule->command('vaccine-state:load-data')->hourly();
     }
 
     /**
