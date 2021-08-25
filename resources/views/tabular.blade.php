@@ -9,6 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
           rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" 
           crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">      
+    <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/sticky-header/bootstrap-table-sticky-header.css" rel="stylesheet">
 
 
     <title>Malaysia Vaccine Map</title>
@@ -64,22 +66,23 @@
     <div class="row">
         <div class="col tabular-data">
             <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" data-toggle="table"  data-sticky-header="true">
                         <thead>
                             <tr>
                             <th scope="col">State</th>
+                            <th scope="col">Population</th>
                             <th scope="col">First Dose (%)</th>
                             <th scope="col">Second Dose (%)</th>
                             <th scope="col">Pfizer ({{ $date }})</th>
                             <th scope="col">Sinovac ({{ $date }})</th>
                             <th scope="col">Astrazeneca ({{ $date }})</th>
-                            <th scope="col">Population</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach( $tabular_data as $item )
                                 <tr>
                                     <td> {{ $item->state }} </td>
+                                    <td> {{ $item->pop }} </td>
                                     <td> {{ $item->cumul_partial_percentage }} </td>
                                     <td> {{ $item->cumul_full_percentage }} </td>
                                     <td> 
@@ -100,7 +103,6 @@
                                         {{ $item->astra2 }} (2nd)
                                         <br> 
                                     </td>
-                                    <td> {{ $item->pop }} </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -127,6 +129,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" 
             integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" 
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+   <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>    
+   <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>    
     
 
   </body>
