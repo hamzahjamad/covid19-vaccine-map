@@ -6,7 +6,7 @@ Show the vaccine per capita count in Malaysia map. Data visualization for the va
 ## Screenshots & Demo 
 
 ![Demo 1](/docs/demo1.png?raw=true "Demo 1")
-![Demo 2](/docs/demo1.png?raw=true "Demo 2")
+![Demo 2](/docs/demo2.png?raw=true "Demo 2")
 
 [Demo URL - covid19-vaccine-map.hamzahjamad.com](https://covid19-vaccine-map.hamzahjamad.com/)
 
