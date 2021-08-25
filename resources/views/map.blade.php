@@ -24,13 +24,45 @@
             height: 100%;
             width: 100%;
         }
+        #mapid {
+            height: 95%;
+            padding-top: 56px;
+        }
         .legend-card {
             margin-bottom: 40px !important;
         }
     </style>
 
+    @if(env('GOOGLE_ANALYTICS_ID'))
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{env('GOOGLE_ANALYTICS_ID')}}"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+
+        gtag("config", "{{env('GOOGLE_ANALYTICS_ID')}}");
+        </script> 
+    @endif 
+
   </head>
   <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/">Map</a>
+                <a class="nav-link" href="/tabular">Tabular</a>
+            </div>
+            </div>
+        </div>
+    </nav>
+
     <div id="mapid"></div>
 
 
@@ -78,7 +110,9 @@
 
                             var weight = feature.properties.Weight1;
                             return {
-                                "fillOpacity": weight / 10
+                                "fillOpacity": weight / 10,
+                                "fillColor": "#3CB64C",
+                                "color": "#3CB64C",
                             }
                         },
                         onEachFeature: function (feature, layer) {
@@ -92,12 +126,10 @@
                                 
                                 if (showCount == null || showCount=="dose1_cumul") {
                                     description = feature.properties.Description1;
-                                    weight = feature.properties.Weight1;
                                 }
 
                                 if (showCount=="dose2_cumul") {
                                     description = feature.properties.Description2;
-                                    weight = feature.properties.Weight2;
                                 }
                                 
 

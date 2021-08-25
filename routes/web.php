@@ -15,7 +15,13 @@ use App\Repositories\Contracts\IGeoJSONRepository;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('map');
+});
+
+Route::get('/tabular', function (IGeoJSONRepository $geojson_repository) {
+    $tabular_data = $geojson_repository->getAllDosesCount();
+    $date = $tabular_data->first()->date;
+    return view('tabular', compact("tabular_data", "date"));
 });
 
 

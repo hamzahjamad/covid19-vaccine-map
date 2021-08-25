@@ -93,24 +93,63 @@ class GeoJSONRepository implements IGeoJSONRepository
             $item["properties"]["Description1"] =  "<b>".number_format($doses_administered_1st, 0, ".", ",")."</b> first doses have been administered, <b>";
             $item["properties"]["Description1"] .= $percapita_count_1st."</b> per 100 people.";
             $item["properties"]["Description1"] .= "<br>";
-            $item["properties"]["Description1"] .= "<br>Administered Today (" .$date .")";
+            $item["properties"]["Description1"] .= "<br>Administered (" .$date .")";
             $item["properties"]["Description1"] .= "<br>&nbsp;Pfizer: " .$pfizer_1st;
             $item["properties"]["Description1"] .= "<br>&nbsp;Sinovac: " .$sinovac_1st;
             $item["properties"]["Description1"] .= "<br>&nbsp;Astrazeneca: " .$astra_1st;
+            $item["properties"]["Description1"] .= "<br>";
+            $item["properties"]["Description1"] .= "<br>";
+            $item["properties"]["Description1"] .= "Population: " .number_format($population, 0, ".", ",");
 
             $item["properties"]["Weight2"] = round($doses_administered_2nd/$population, 2) * 10;
             $item["properties"]["Description2"] =  "<b>".number_format($doses_administered_2nd, 0, ".", ",")."</b> second doses have been administered, <b>";
             $item["properties"]["Description2"] .= $percapita_count_2nd."</b> per 100 people.";
             $item["properties"]["Description2"] .= "<br>";
-            $item["properties"]["Description2"] .= "<br>Administered Today (" .$date .")";
+            $item["properties"]["Description2"] .= "<br>Administered (" .$date .")";
             $item["properties"]["Description2"] .= "<br>&nbsp;Pfizer: " .$pfizer_2nd;
             $item["properties"]["Description2"] .= "<br>&nbsp;Sinovac: " .$sinovac_2nd;
             $item["properties"]["Description2"] .= "<br>&nbsp;Astrazeneca: " .$astra_2nd;
+            $item["properties"]["Description2"] .= "<br>";
+            $item["properties"]["Description2"] .= "<br>";
+            $item["properties"]["Description2"] .= "Population: " .number_format($population, 0, ".", ",");
             
             return $item;
         }, $geojson["features"]);
 
 
         return $geojson;
+    }
+
+    public function getAllDosesCount()
+    {
+        $population = Population::all("state","pop");
+
+        $vaccine_state = VaccineState::whereIn('date', VaccineState::selectRaw("max(date)")->get())
+                                     ->orderBy("state")
+                                     ->get()
+                                     ->transform(function($vaccine_state_item) use ($population) {
+                                        
+                                        $population_model = $population->filter(function($pop_item) use ($vaccine_state_item) {
+                                            return $pop_item->state == $vaccine_state_item->state;
+                                            })->first();
+
+                                        $vaccine_state_item["cumul_partial_percentage"] = round( $vaccine_state_item["cumul_partial"] / $population_model->pop , 2 ) * 100;
+                                        $vaccine_state_item["cumul_full_percentage"] = round( $vaccine_state_item["cumul_full"] / $population_model->pop , 2 ) * 100;
+
+                                        $vaccine_state_item["pfizer1"] = number_format($vaccine_state_item["pfizer1"], 0, ".", ",");
+                                        $vaccine_state_item["pfizer2"] = number_format($vaccine_state_item["pfizer2"], 0, ".", ",");
+
+                                        $vaccine_state_item["sinovac1"] = number_format($vaccine_state_item["sinovac1"], 0, ".", ",");
+                                        $vaccine_state_item["sinovac2"] = number_format($vaccine_state_item["sinovac2"], 0, ".", ",");
+
+                                        $vaccine_state_item["astra1"] = number_format($vaccine_state_item["astra1"], 0, ".", ",");
+                                        $vaccine_state_item["astra2"] = number_format($vaccine_state_item["astra2"], 0, ".", ",");
+
+                                        $vaccine_state_item["pop"] = number_format($population_model->pop, 0, ".", ",");
+
+                                        return $vaccine_state_item;
+                                     });
+        
+        return $vaccine_state;   
     }
 }
