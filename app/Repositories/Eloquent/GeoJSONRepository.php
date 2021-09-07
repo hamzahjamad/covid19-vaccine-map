@@ -89,6 +89,8 @@ class GeoJSONRepository implements IGeoJSONRepository
             $sinovac_2nd = $geojson_repository->getDosesAdministeredCountByState($state, "sinovac2");
             $astra_2nd = $geojson_repository->getDosesAdministeredCountByState($state, "astra2");
 
+            $cansino = $geojson_repository->getDosesAdministeredCountByState($state, "cansino");
+
             $item["properties"]["Weight1"] = round($doses_administered_1st/$population, 2) * 10;
             $item["properties"]["Description1"] =  "<b>".number_format($doses_administered_1st, 0, ".", ",")."</b> first doses have been administered, <b>";
             $item["properties"]["Description1"] .= $percapita_count_1st."</b> per 100 people.";
@@ -109,6 +111,7 @@ class GeoJSONRepository implements IGeoJSONRepository
             $item["properties"]["Description2"] .= "<br>&nbsp;Pfizer: " .$pfizer_2nd;
             $item["properties"]["Description2"] .= "<br>&nbsp;Sinovac: " .$sinovac_2nd;
             $item["properties"]["Description2"] .= "<br>&nbsp;Astrazeneca: " .$astra_2nd;
+            $item["properties"]["Description2"] .= "<br>&nbsp;Cansino: " .$cansino;
             $item["properties"]["Description2"] .= "<br>";
             $item["properties"]["Description2"] .= "<br>";
             $item["properties"]["Description2"] .= "Population: " .number_format($population, 0, ".", ",");

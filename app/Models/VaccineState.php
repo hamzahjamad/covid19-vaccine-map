@@ -24,6 +24,7 @@ class VaccineState extends Model
         "sinovac2",
         "astra1",
         "astra2",
+        "cansino",
         "pending",
     ];
 }

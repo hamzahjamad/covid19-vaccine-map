@@ -76,6 +76,7 @@
                             <th scope="col">Pfizer ({{ $date }})</th>
                             <th scope="col">Sinovac ({{ $date }})</th>
                             <th scope="col">Astrazeneca ({{ $date }})</th>
+                            <th scope="col">Cansino ({{ $date }})</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,6 +103,9 @@
                                         <br>
                                         {{ $item->astra2 }} (2nd)
                                         <br> 
+                                    </td>
+                                    <td> 
+                                        {{ $item->cansino }}  
                                     </td>
                                 </tr>
                             @endforeach

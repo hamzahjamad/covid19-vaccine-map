@@ -62,7 +62,8 @@ class LoadVaccineStateData extends Command
                 "sinovac2" => $row[11],
                 "astra1" => $row[12],
                 "astra2" => $row[13],
-                "pending" => $row[14],
+                "cansino" => $row[14],
+                "pending" => $row[15],
             ]);
         }
 
