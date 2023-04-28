@@ -8,15 +8,6 @@ Show the vaccine per capita count in Malaysia map. Data visualization for the va
 ![Demo 1](/docs/demo1.png?raw=true "Demo 1")
 ![Demo 2](/docs/demo2.png?raw=true "Demo 2")
 
-[Demo URL - covid19-vaccine-map.hamzahjamad.com](https://covid19-vaccine-map.hamzahjamad.com/)
-
-## TODO
-
-- [x] Switch/Radio button to show 2nd dose details.
-- [ ] Legend to show details of what the color opacity represent.
-- [ ] Date picker to show the vaccine dose details based on date.
-- [x] Auto sync with the latest data from citf github repo.
-
 
 ### Technology
 
